@@ -167,7 +167,7 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;justify-c
 
 /* INTRO SPLASH */
 #intro{
-  position:fixed;inset:0;z-index:10000;
+  position:fixed;inset:0;z-index:10001;
   background:#000;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   overflow:hidden;
@@ -208,11 +208,186 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;justify-c
 }
 @keyframes introFadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 @keyframes loadBar{0%{width:0%}100%{width:100%}}
+
+/* VISITOR FORM */
+#visitor-form-screen{
+  position:fixed;inset:0;z-index:9998;
+  display:flex;align-items:center;justify-content:center;
+  padding:1.5rem;
+  transition:opacity 1s ease, visibility 1s ease;
+  opacity:0;visibility:hidden;pointer-events:none;
+  overflow:hidden;
+}
+#visitor-form-screen::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,#020208 0%,#05050A 50%,#0a0514 100%);
+  z-index:0;
+}
+#visitor-form-screen::after{
+  content:'';position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(127,255,212,0.06) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+#visitor-form-screen.show{opacity:1;visibility:visible;pointer-events:all;}
+#visitor-form-screen.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.vf-wrap{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:1fr 1fr;
+  max-width:900px;width:100%;
+  border-radius:24px;overflow:hidden;
+  border:1px solid rgba(127,255,212,0.1);
+  box-shadow:0 40px 80px rgba(0,0,0,0.6);
+  animation:vfSlideUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
+}
+.vf-left{
+  background:linear-gradient(135deg,#0D1F1A,#071510);
+  padding:3rem;display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.vf-left::before{
+  content:'';position:absolute;bottom:-80px;left:-80px;
+  width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(127,255,212,0.12),transparent 70%);
+}
+.vf-left-tag{
+  font-family:'Space Mono',monospace;font-size:0.68rem;
+  letter-spacing:3px;text-transform:uppercase;
+  color:#7FFFD4;margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.vf-left-tag::before{content:'';width:24px;height:1px;background:#7FFFD4;}
+.vf-left-title{
+  font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;
+  color:#fff;letter-spacing:-1.5px;line-height:1.1;margin-bottom:1rem;
+}
+.vf-left-title span{color:#7FFFD4;}
+.vf-left-desc{
+  font-size:0.9rem;color:rgba(255,255,255,0.4);
+  line-height:1.8;margin-bottom:2rem;
+}
+.vf-left-info{display:flex;flex-direction:column;gap:0.7rem;}
+.vf-info-item{
+  display:flex;align-items:center;gap:0.8rem;
+  font-family:'Space Mono',monospace;font-size:0.75rem;color:rgba(255,255,255,0.3);
+}
+.vf-info-dot{width:6px;height:6px;background:#7FFFD4;border-radius:50%;flex-shrink:0;}
+.vf-right{
+  background:#07070F;
+  padding:3rem;
+}
+.vf-right-title{
+  font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;
+  color:#F0EDE8;margin-bottom:0.4rem;
+}
+.vf-right-sub{font-size:0.85rem;color:#8A8A9A;margin-bottom:2rem;line-height:1.6;}
+.vf-field{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
+.vf-field label{
+  font-family:'Space Mono',monospace;font-size:0.65rem;
+  letter-spacing:2px;text-transform:uppercase;color:#8A8A9A;
+}
+.vf-field input{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.07);
+  color:#F0EDE8;padding:0.8rem 1rem;
+  border-radius:8px;font-family:'DM Sans',sans-serif;
+  font-size:0.9rem;outline:none;
+  transition:all 0.3s;
+}
+.vf-field input:focus{
+  border-color:#7FFFD4;
+  background:rgba(127,255,212,0.03);
+  box-shadow:0 0 0 3px rgba(127,255,212,0.06);
+}
+.vf-field input::placeholder{color:rgba(138,138,154,0.3);}
+.vf-btn{
+  width:100%;padding:1rem;margin-top:0.8rem;
+  background:linear-gradient(135deg,#7FFFD4,#5FDFB4);
+  color:#05050A;border:none;border-radius:10px;
+  font-family:'Space Mono',monospace;font-size:0.85rem;
+  font-weight:700;letter-spacing:1.5px;cursor:pointer;
+  transition:all 0.3s;text-transform:uppercase;
+  box-shadow:0 8px 25px rgba(127,255,212,0.2);
+}
+.vf-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 35px rgba(127,255,212,0.35);
+}
+.vf-btn:active{transform:translateY(0);}
+@keyframes vfSlideUp{
+  from{opacity:0;transform:translateY(50px) scale(0.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@media(max-width:700px){
+  .vf-wrap{grid-template-columns:1fr}
+  .vf-left{display:none}
+}
+
+/* SHAKE + ERROR */
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-5px)}
+  80%{transform:translateX(5px)}
+}
+.vf-field input.error{
+  border-color:#FF6B6B !important;
+  background:rgba(255,107,107,0.06) !important;
+  animation:shake 0.4s ease;
+}
+.vf-error-msg{
+  font-family:'Space Mono',monospace;
+  font-size:0.68rem;color:#FF6B6B;
+  margin-top:0.3rem;letter-spacing:0.5px;
+  display:none;
+}
+.vf-field input.error ~ .vf-error-msg{display:block;}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
+
+
+<div id="visitor-form-screen">
+  <div class="vf-wrap">
+    <div class="vf-left">
+      <div class="vf-left-tag">Visitor Access</div>
+      <div class="vf-left-title">Welcome to<br>Maruf's<br><span>Portfolio</span></div>
+      <div class="vf-left-desc">Please share a few details before exploring. It helps Maruf connect with you!</div>
+      <div class="vf-left-info">
+        <div class="vf-info-item"><div class="vf-info-dot"></div>Web Developer</div>
+        <div class="vf-info-item"><div class="vf-info-dot"></div>Graphic Designer</div>
+        <div class="vf-info-item"><div class="vf-info-dot"></div>Based in Pabna, Bangladesh</div>
+      </div>
+    </div>
+    <div class="vf-right">
+      <div class="vf-right-title">Your Details</div>
+      <div class="vf-right-sub">Fill in the form to enter the portfolio</div>
+      <form id="vf-form" onsubmit="return false;">
+        <div class="vf-field">
+          <label>Full Name</label>
+          <input type="text" id="vf-name" placeholder="John Doe" autocomplete="off"/><div class="vf-error-msg">⚠ Please enter your name</div>
+        </div>
+        <div class="vf-field">
+          <label>Email Address</label>
+          <input type="email" id="vf-email" placeholder="you@example.com" autocomplete="off"/><div class="vf-error-msg">⚠ Please enter your email</div>
+        </div>
+        <div class="vf-field">
+          <label>Contact Number</label>
+          <input type="tel" id="vf-phone" placeholder="+880 1XXX-XXXXXX" autocomplete="off"/><div class="vf-error-msg">⚠ Please enter your contact number</div>
+        </div>
+        <div class="vf-field">
+          <label>City</label>
+          <input type="text" id="vf-city" placeholder="Dhaka, Bangladesh" autocomplete="off"/><div class="vf-error-msg">⚠ Please enter your city</div>
+        </div>
+        <button type="button" class="vf-btn" id="vf-btn" onclick="submitVisitorForm()">Enter Portfolio &#8594;</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 <div id="intro">
   <canvas id="space-canvas"></canvas>
@@ -258,7 +433,7 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;justify-c
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">View My Work ↗</a>
         <a href="#contact" class="btn btn-ghost">Get In Touch</a>
-        /* Social Media links */
+
       <div class="social-links">
         <a href="https://www.facebook.com/usernamenotfound369" target="_blank" class="social-btn" title="Facebook">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
@@ -510,6 +685,73 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;justify-c
 
 <script>
 
+
+// VISITOR FORM LOGIC
+function showVisitorForm(){
+  var vf = document.getElementById('visitor-form-screen');
+  vf.classList.add('show');
+}
+function hideVisitorForm(){
+  var vf = document.getElementById('visitor-form-screen');
+  vf.classList.add('hide');
+  vf.classList.remove('show');
+  setTimeout(function(){ vf.style.display='none'; }, 1000);
+}
+function skipVisitorForm(){
+  hideVisitorForm();
+}
+function validateField(id){
+  var inp = document.getElementById(id);
+  if(!inp.value.trim()){
+    inp.classList.remove('error');
+    void inp.offsetWidth; // reflow to restart animation
+    inp.classList.add('error');
+    inp.addEventListener('input', function(){ inp.classList.remove('error'); }, {once:true});
+    return false;
+  }
+  inp.classList.remove('error');
+  return true;
+}
+
+function submitVisitorForm(){
+  var v1=validateField('vf-name');
+  var v2=validateField('vf-email');
+  var v3=validateField('vf-phone');
+  var v4=validateField('vf-city');
+  if(!v1||!v2||!v3||!v4) return;
+
+  var btn = document.getElementById('vf-btn');
+  var name = document.getElementById('vf-name').value;
+  var email = document.getElementById('vf-email').value;
+  var phone = document.getElementById('vf-phone').value;
+  var city = document.getElementById('vf-city').value;
+
+  btn.textContent = 'Sending...';
+  btn.style.opacity = '0.7';
+
+  // Send to EmailJS
+  emailjs.send('service_3hgjhky', 'template_0m26nrh', {
+    from_name: name,
+    from_email: email,
+    message: '🔔 New Visitor!\nName: ' + name + '\nEmail: ' + email + '\nPhone: ' + phone + '\nCity: ' + city
+  }).then(function(){
+    btn.textContent = 'Welcome! Entering... ✓';
+    btn.style.background = '#4ADE80';
+    btn.style.opacity = '1';
+    // Save to Google Sheets
+    fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({name:name, email:email, phone:phone, city:city, time: new Date().toLocaleString()})
+    }).catch(function(){});
+    setTimeout(function(){ hideVisitorForm(); }, 1200);
+  }).catch(function(){
+    hideVisitorForm();
+  });
+}
+// END VISITOR FORM
+
 // SPACE INTRO
 (function(){
   var canvas = document.getElementById('space-canvas');
@@ -627,7 +869,7 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;justify-c
   animate();
 
   setTimeout(function(){
-    document.getElementById('intro').classList.add('hide');
+    document.getElementById('intro').classList.add('hide'); showVisitorForm();
     setTimeout(function(){
       document.getElementById('intro').style.display='none';
       running=false;
